@@ -6,9 +6,13 @@ const PostSchema = new mongoose.Schema({
         required: 'Text is required',
         maxLength: 500
       },
-      photo: {
-        type: String,
-      }
+    verified: {
+        type: Boolean,
+        required: 'Are you verified'
+      },
+    image: {
+        type: String
+      },
 },
 {timestamps: true});
 
