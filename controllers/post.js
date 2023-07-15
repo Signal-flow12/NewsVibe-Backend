@@ -1,31 +1,52 @@
 const express = require('express');
 const router = express.Router();
+const { Post } = require('../models/Index')
 
 //Index
-router.get('/', (req,res) => {
-    res.status(200).json({message: 'post index'})
+router.get('/', async (req,res) => {
+    try{
+        res.json(await Post.find({}));
+
+    }catch (error){
+        console.log(error)
+    }
 })
 
 
 //Create
 router.post("/", async (req, res) =>  {
-	res.status(201).json({message: "create post"})
+	try{
+        res.json(await Post.create(req.body))
+    }catch(error){
+        console.log(error)
+    }
 });
 
 // post SHOW ROUTE
 router.get("/:id", async (req, res) => {
-	res.status(200).json({message: "post show route: " + req.params.id })
+	try{
+        res.json(await Post.findById(req.params.id))
+    }catch(error){
+        console.log(error)
+    }
 });
 
 // post DELETE ROUTE
 router.delete("/:id", async (req, res) => {
-	res.status(200).json({message: "post delete route: " + req.params.id })
+	try {
+        await Post.findByIdAndUpdate(req.params.id, req.body, {new:true})
+    }catch(error){
+        console.log(error)
+    }
 });
 
 // post UPDATE ROUTE
 router.put("/:id", async (req, res) => {
-	console.log(req.body)
-	res.status(200).json({message: "post update route: " + req.params.id })
+	try{
+        res.json(await Post.findByIdAndRemove(req.params.id));
+    }catch(error){
+        console.log(error)
+    }
 });
 
 
