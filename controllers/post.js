@@ -34,7 +34,7 @@ router.get("/:id", async (req, res) => {
 // post DELETE ROUTE
 router.delete("/:id", async (req, res) => {
 	try {
-        await Post.findByIdAndUpdate(req.params.id, req.body, {new:true})
+        await Post.findByIdAndDelete(req.params.id, req.body)
     }catch(error){
         console.log(error)
     }
