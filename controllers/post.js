@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Post } = require('../models/Index')
+const { Post, Comments } = require('../models/Index')
 
 //Index
 router.get('/', async (req,res) => {
@@ -48,6 +48,28 @@ router.put("/:id", async (req, res) => {
         console.log(error)
     }
 });
+
+router.post('/:id/comments', async (req, res, next) => {
+    try {
+        let newComment = req.body;
+        // newComment.user = req.session.currentUser.id;
+        newComment.post = req.params.id;
+        res.json(await Comments.create(newComment));
+    } catch(err) {
+        console.log(err);
+        next();
+    }
+})
+
+router.get('/:id/comments', async (req, res, next) => {
+    try {
+        const postComments = await Comments.find({post: req.params.id});
+        res.json(postComments);
+    } catch(err) {
+        console.log(err);
+        next();
+    }
+})
 
 
 module.exports = router

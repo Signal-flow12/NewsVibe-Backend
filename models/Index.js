@@ -1,5 +1,6 @@
 require('../config/connection');
 
 module.exports= {
-    Post: require('./Post')
+    Post: require('./Post'),
+    Comments: require('./Comments')
 }
